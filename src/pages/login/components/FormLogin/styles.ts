@@ -1,9 +1,8 @@
-import { theme } from '@/styles/theme'
 import { styled } from 'styled-components'
 
 export const Container = styled.div`
-  background: ${theme.COLORS.WHITE};
-  color: ${theme.COLORS.PRIMARY_800};
+  background: ${({ theme }) => theme.COLORS.WHITE};
+  color: ${({ theme }) => theme.COLORS.PRIMARY_800};
   width: 380px;
   height: 433px;
   border-radius: 5%;
@@ -23,13 +22,20 @@ export const ContainerInput = styled.div`
   width: 100%;
 `
 
+export const LinkContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  margin: 1rem 0.375rem 0 0;
+  gap: 5px;
+`
+
 export const ForgotPasswordContainer = styled.div`
   display: flex;
   justify-content: end;
   gap: 5px;
-  margin-top: 1.125rem;
+  margin-top: 0.6rem;
 
   a {
-    color: ${theme.COLORS.ORANGE_500};
+    color: ${({ theme }) => theme.COLORS.ORANGE_500};
   }
 `
