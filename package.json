@@ -36,6 +36,7 @@
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
     "@types/styled-components": "^5.1.26",
+    "babel-plugin-styled-components": "^2.1.4",
     "typescript": "5.1.6"
   }
 }
