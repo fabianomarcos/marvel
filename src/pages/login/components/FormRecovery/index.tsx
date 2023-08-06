@@ -5,17 +5,19 @@ import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 
-import { FiMail } from 'react-icons/fi'
+import { Icons } from '@/lib/icons'
 
-import { Container, ContainerInput } from './styles'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
-import { useAuth } from '@/hooks/auth'
-import getValidationErrors from '@/utils/getValidationErrors'
-import { useToast } from '@/hooks/toast'
 import FormTitle from '../TitleForm'
 import { User } from '@/pages/api/users/User'
-import { At } from 'phosphor-react'
+
+import { useAuth } from '@/hooks/auth'
+import { useToast } from '@/hooks/toast'
+
+import getValidationErrors from '@/utils/getValidationErrors'
+
+import { Container, ContainerInput } from './styles'
 
 
 
@@ -72,7 +74,7 @@ export default function FormLogin() {
 
       <Form ref={formRef} onSubmit={handleSubmit}>
         <ContainerInput>
-          <Input name="email" icon={At} placeholder="Informe seu email" />
+          <Input name="email" icon={Icons.At} placeholder="Informe seu email" />
         </ContainerInput>
         <Button type="submit">enviar link</Button>
       </Form>
