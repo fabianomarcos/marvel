@@ -1,16 +1,15 @@
-import { theme } from '@/styles/theme'
 import { styled } from 'styled-components'
 
 export const Container = styled.div`
-  background: ${theme.COLORS.WHITE};
-  color: ${theme.COLORS.PRIMARY_800};
+  background: ${({ theme }) => theme.COLORS.WHITE};
+  color: ${({ theme }) => theme.COLORS.PRIMARY_800};
 
   span {
-    color: ${theme.COLORS.ORANGE_500};
+    color: ${({ theme }) => theme.COLORS.ORANGE_500};
   }
 
   p {
-    color: ${theme.COLORS.GRAY_500};
+    color: ${({ theme }) => theme.COLORS.GRAY_500};
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
