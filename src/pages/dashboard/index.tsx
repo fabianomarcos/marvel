@@ -1,7 +1,7 @@
 import SideBar from '@/components/SideBar'
 import Header from '@/components/Header'
 
-import { Content, StructurePage } from './styles'
+import { Content, ContentSiglePage, StructurePage } from './styles'
 
 interface IProps {
   component: any
@@ -13,7 +13,9 @@ export function Structure({ component: Component}:IProps) {
       <SideBar />
       <Content>
         <Header />
-        <Component />
+        <ContentSiglePage>
+          <Component />
+        </ContentSiglePage>
       </Content>
     </StructurePage>
   )

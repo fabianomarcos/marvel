@@ -26,7 +26,7 @@ export default function ensureAuthenticated(
 
     const { sub } = decoded as ITokenPayload
 
-    request.user = {
+    (request as any).user = {
       id: sub,
     }
   } catch {

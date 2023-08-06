@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { IInfoCharacters } from '../homePage'
+import { IInfoCharacters } from '@/interfaces/types'
 import { Container, DescriptionCard } from './styles'
 import Link from 'next/link'
 

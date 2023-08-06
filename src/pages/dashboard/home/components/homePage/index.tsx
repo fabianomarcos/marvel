@@ -4,13 +4,7 @@ import { apiMarvel } from '@/lib/axios'
 import { Container } from './styles'
 import CardInfo from '../cardInfo';
 import { configMarvelApi } from '@/utils/configMarvelApi';
-
-export interface IInfoCharacters {
-  id: string;
-  name: string;
-  thumbnail: { path: string; extension: string };
-  description: string;
-}
+import { IInfoCharacters } from '@/interfaces/types';
 
 export function HomePage() {
   const [characters, setCharacters] = useState<IInfoCharacters[]>([])
