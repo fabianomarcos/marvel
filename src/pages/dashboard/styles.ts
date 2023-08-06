@@ -17,3 +17,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
 `
+
+export const ContentSiglePage = styled.div`
+  padding: 24px 0 0 34px;
+`
