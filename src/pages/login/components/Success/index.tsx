@@ -1,11 +1,14 @@
+import { useRouter } from 'next/router'
 import { Form } from '@unform/web'
 
 import { Container } from './styles'
 import { Button } from '@/components/Button'
 import FormTitle from '../TitleForm'
-import Link from 'next/link'
 
 export default function SuccessResetPassword() {
+  const router = useRouter()
+  const onSubmit = () => router.push('/login')
+
   return (
     <Container>
       <FormTitle
@@ -14,12 +17,10 @@ export default function SuccessResetPassword() {
         infoForUser="Senha alterada com sucesso, agora você pode realizar seu login"
       />
 
-      <Form>
-        <Link href='/login'>
-          <Button>
-              voltar para o login
-          </Button>
-        </Link>
+      <Form onSubmit={onSubmit}>
+        <Button>
+          voltar para o login
+        </Button>
       </Form>
     </Container>
   )
