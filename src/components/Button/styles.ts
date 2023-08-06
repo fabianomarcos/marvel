@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 import { shade } from 'polished'
-import { theme } from '@/styles/theme'
 
 export const Container = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${theme.COLORS.PRIMARY_600};
-  color: ${theme.COLORS.WHITE};
+  background: ${({ theme }) => theme.COLORS.PRIMARY_600};
+  color: ${({ theme }) => theme.COLORS.WHITE};
   height: 3rem;
   border-radius: 0.56rem;
   gap: 0.56rem;

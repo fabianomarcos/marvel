@@ -2,10 +2,10 @@ import { useRef, useState } from 'react'
 import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 
-import { At, Eye, EyeClosed, SignIn } from 'phosphor-react'
+import { SignIn } from 'phosphor-react'
+import { Icons } from '@/lib/icons'
 
 import { ContainerInput } from './styles'
-import { theme } from '@/styles/theme'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
 
@@ -22,17 +22,17 @@ export function FormCreateAndResetUser({ handleSubmit, label }: IProps) {
   return (
     <Form ref={formRef} onSubmit={handleSubmit}>
       <ContainerInput>
-        <Input name="email" icon={At} placeholder="Informe seu email" />
+        <Input name="email" icon={Icons.At} placeholder="Informe seu email" />
         <Input
           name="password"
-          icon={closedEye ? EyeClosed : Eye}
+          icon={closedEye ? Icons.EyeClosed : Icons.Eye}
           onClickIcon={() => onClickIcon(closedEye)}
           type={closedEye ? 'password' : 'text'}
           placeholder="Informe sua nova senha"
         />
         <Input
           name="confirm_password"
-          icon={closedEye ? EyeClosed : Eye}
+          icon={closedEye ? Icons.EyeClosed : Icons.Eye}
           onClickIcon={() => onClickIcon(closedEye)}
           type={closedEye ? 'password' : 'text'}
           placeholder="Confirme sua nova senha"
@@ -41,7 +41,7 @@ export function FormCreateAndResetUser({ handleSubmit, label }: IProps) {
       <Button type="submit">
         <>
           <span>{label}</span>
-          <SignIn size={13} color={theme.COLORS.GRAY_150} />
+          <SignIn size={13} color='#FBFBFB' />
         </>
       </Button>
     </Form>

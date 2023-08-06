@@ -1,26 +1,28 @@
 import { useRouter } from 'next/router'
 import { Form } from '@unform/web'
 
-import { Container } from './styles'
+import { Container, ContainerButton } from './styles'
 import { Button } from '@/components/Button'
 import FormTitle from '../TitleForm'
 
-export default function SuccessResetPassword() {
+export default function Agent() {
   const router = useRouter()
   const onSubmit = () => router.push('/login')
 
   return (
     <Container>
       <FormTitle
-        title="Tudo certo"
-        complement=";)"
-        infoForUser="Senha alterada com sucesso, agora você pode realizar seu login"
+        title="Selecione o seu agente mais legal"
+        complement="."
+        infoForUser="Tenha a visão completa do seu agente."
       />
 
       <Form onSubmit={onSubmit}>
-        <Button>
-          voltar para o login
-        </Button>
+        <ContainerButton>
+          <Button>
+            Entrar
+          </Button>
+        </ContainerButton>
       </Form>
     </Container>
   )

@@ -8,4 +8,8 @@ export const Container = styled.div`
   border-radius: 5%;
   padding: 24px 36px;
   flex-shrink: 0;
+  letter-spacing: -2.34px;
+`
+export const ContainerButton = styled.div`
+  width: 88px;
 `

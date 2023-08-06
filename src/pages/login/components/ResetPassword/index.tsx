@@ -39,9 +39,9 @@ export default function FormResetPassword() {
 
         await schema.validate(data, { abortEarly: false })
 
-        const user = await api.put('/reset-password', data)
+        await api.put('/reset-password', data)
 
-        await router.push('/')
+        await router.push('/login')
 
         addToast({
           type: 'success',

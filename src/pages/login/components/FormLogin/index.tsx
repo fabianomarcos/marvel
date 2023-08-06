@@ -5,11 +5,10 @@ import { FormHandles } from '@unform/core'
 import Link from 'next/link'
 import * as Yup from 'yup'
 
-import { FiEye, FiEyeOff, FiAtSign, FiMail } from 'react-icons/fi'
-import { Question, At, Eye, EyeClosed, SignIn } from 'phosphor-react'
+import { Question, SignIn } from 'phosphor-react'
+import { Icons } from '@/lib/icons'
 
-import { Container, ContainerInput, ForgotPasswordContainer } from './styles'
-import { theme } from '@/styles/theme'
+import { Container, ContainerInput, ForgotPasswordContainer, LinkContainer } from './styles'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
 import { useAuth } from '@/hooks/auth'
@@ -41,10 +40,7 @@ export default function FormLogin() {
 
         await schema.validate(data, { abortEarly: false })
 
-        await login({
-          email: data.email,
-          password: data.password,
-        })
+        await login(data)
 
         await router.push('/')
 
@@ -54,15 +50,22 @@ export default function FormLogin() {
           description: 'Bem vindo à plataforma.',
         })
       } catch (err: any) {
+        console.log('err: ', err);
+        console.log('err: ', err.response);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
           formRef.current?.setErrors(errors)
         }
 
+        const description =
+          err?.response?.data?.message||
+          err?.message ||
+          'Ocorreu um erro ao fazer login, cheque as credenciais.'
+
         addToast({
           type: 'error',
           title: 'Erro na autenticação',
-          description: err.message || 'Ocorreu um erro ao fazer login, cheque as credenciais.',
+          description,
         })
       }
     },
@@ -81,10 +84,10 @@ export default function FormLogin() {
 
       <Form ref={formRef} onSubmit={handleSubmit}>
         <ContainerInput>
-          <Input name="email" icon={FiMail} placeholder="Informe seu email" />
+          <Input name="email" icon={Icons.At} placeholder="Informe seu email" />
           <Input
             name="password"
-            icon={closedEye ? FiEyeOff : FiEye}
+            icon={closedEye ? Icons.EyeClosed : Icons.Eye}
             onClickIcon={() => onClickIcon(closedEye)}
             type={closedEye ? 'password' : 'text'}
             placeholder="Informe sua senha"
@@ -93,14 +96,18 @@ export default function FormLogin() {
         <Button type="submit">
           <>
             <span>entrar</span>
-            <SignIn size={13} color={theme.COLORS.GRAY_150} />
+            <SignIn size={13} color='#FBFBFB' />
           </>
         </Button>
       </Form>
 
-      <Link href="/create-user">Cadastrar usuário</Link>
+      <LinkContainer>
+        <Question color='#293D71' />
+        <Link href="/create-user">Cadastrar usuário</Link>
+      </LinkContainer>
+
       <ForgotPasswordContainer>
-        <Question color={theme.COLORS.ORANGE_500} />
+        <Question color='#F21A05' />
         <span>
           <Link href="/recovery-password">Esqueceu a senha?</Link>
         </span>
