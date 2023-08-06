@@ -1,10 +1,9 @@
-import { theme } from '@/styles/theme'
 import { styled } from 'styled-components'
 
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: ${theme.COLORS.PRIMARY_800};
+  background: ${({ theme }) => theme.COLORS.PRIMARY_800};
 `
 export const ContainerImage = styled.div`
   width: 100vw;
