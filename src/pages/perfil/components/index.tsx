@@ -94,7 +94,7 @@ export function Perfil() {
 
       {isActivated("species") && <Species character={character} />}
 
-      {isActivated("authors") && <Authors character={character} />}
+      {isActivated("authors") && <Authors />}
     </Container>
   );
 }
