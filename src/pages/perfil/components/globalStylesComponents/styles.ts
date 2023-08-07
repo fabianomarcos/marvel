@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const Container = styled.ul`
+export const UL = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0 37px;

@@ -1,5 +1,5 @@
 import { IInfoCharacters } from "@/interfaces/types";
-import { Container } from "../globalStylesComponents/styles";
+import { UL } from "../globalStylesComponents/styles";
 
 interface IProps {
   character: IInfoCharacters;
@@ -7,10 +7,10 @@ interface IProps {
 
 export function Powers({ character }: IProps) {
   return (
-    <Container>
+    <UL>
       <li>Agility</li>
       <li>Genius</li>
       <li>Precognitive</li>
-    </Container>
+    </UL>
   );
 }

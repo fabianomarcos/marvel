@@ -17,12 +17,12 @@ export function Perfil() {
   const [character, setCharacter] = useState({} as IInfoCharacters);
   const router = useRouter();
   const { apiKey, hash, timestamp } = configMarvelApi;
-  const id = router.query.name;
+  const id = router.query.id;
 
   useEffect(() => {
     const getAgent = async () => {
       const request = apiMarvel.get(
-        `/characters/${id}?ts=${timestamp}&apikey=${apiKey}&hash=${hash}`
+        `/characters/${id}?ts=${timestamp}&apikey=${apiKey}&hash=${hash}&limite=12`
       );
       const {
         data: {
