@@ -1,31 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { apiMarvel } from '@/lib/axios'
-import { Container } from './styles'
-import CardInfo from '../cardInfo';
-import { configMarvelApi } from '@/utils/configMarvelApi';
-import { IInfoCharacters } from '@/interfaces/types';
+import { CardContainer, Container, PaginationContainer } from "./styles";
+import CardInfo from "../cardInfo";
+import { Pagination } from "@/components/Pagination";
+import { useStore } from "@/hooks/store";
 
 export function HomePage() {
-  const [characters, setCharacters] = useState<IInfoCharacters[]>([])
-  const { timestamp, apiKey, hash } = configMarvelApi
-
-  const request = apiMarvel.get(
-    `/characters?ts=${timestamp}&apikey=${apiKey}&hash=${hash}`
-  );
-
+  const [page, setPage] = useState(1)
+  const { characters, totalCharacters, getAgents } = useStore()
+  const limit = page * 12
 
   useEffect(() => {
-    const getAgents = async () => {
-      const { data: { data } } = await request
-      setCharacters(data.results);
-    }
-    getAgents()
-  }, [])
+    getAgents({ limit })
+  }, [page])
+
+  const perPage = 10
+  const pageStart = (page - 1) * perPage
+  const pageEnd = (pageStart + perPage)
+
+  const paginatedCharacter = characters.slice(pageStart, pageEnd)
 
   return (
     <Container>
-      <CardInfo infoCharacters={characters}/>
+      <CardContainer>
+        <CardInfo infoCharacters={paginatedCharacter} />
+      </CardContainer>
+      <PaginationContainer>
+        <Pagination total={totalCharacters} page={page} setCurrentPage={setPage} />
+      </PaginationContainer>
     </Container>
-  )
+  );
 }
