@@ -7,8 +7,9 @@ import { useStore } from "@/hooks/store";
 
 export function HomePage() {
   const [page, setPage] = useState(1)
-  const { characters, totalCharacters, getAgents } = useStore()
-  const limit = page * 12
+  const { characters, getAgents } = useStore()
+  const limitPage = page * 12
+  const limit = limitPage <= 100 ? page * 12 : 100
 
   useEffect(() => {
     getAgents({ limit })
@@ -26,7 +27,7 @@ export function HomePage() {
         <CardInfo infoCharacters={paginatedCharacter} />
       </CardContainer>
       <PaginationContainer>
-        <Pagination total={totalCharacters} page={page} setCurrentPage={setPage} />
+        <Pagination total={100} page={page} setCurrentPage={setPage} />
       </PaginationContainer>
     </Container>
   );
