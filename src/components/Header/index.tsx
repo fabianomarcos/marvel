@@ -1,14 +1,21 @@
-import { useSearch } from "@/hooks/useDebounce";
-import { Container, Search } from "./styles";
+import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import { useState } from "react";
+
+import { useSearch } from "@/hooks/useDebounce";
+import { useStore } from "@/hooks/store";
+
+import { Container, Search } from "./styles";
 
 export default function Header() {
   const [inputValue, setInputValue] = useState("");
-  const value = useSearch({ delay: 3000, value: inputValue });
-  console.log('value: ', value);
+  const { debouncedValue } = useSearch({ delay: 400, value: inputValue });
 
   const getSearchParams = (param: string) => setInputValue(param);
+  const { getAgents } = useStore()
+
+  useEffect(() => {
+    getAgents({ limit: 10, name: debouncedValue })
+  }, [debouncedValue])
 
   return (
     <Container>
