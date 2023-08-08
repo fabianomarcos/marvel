@@ -1,13 +1,8 @@
 # Documentação da Aplicação
-
-
->
   # Comandos para rodar o projeto
-    ```bash
     clonar o repositório git clone https://github.com/fabianomarcos/marvel.git
     rodar mpm i
     npm run dev
-    ```
 
   # Breve descrição das tecnologias utilizadas
     Projeto criado com NextJs
