@@ -1,34 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Documentação da Aplicação
 
-## Getting Started
 
-First, run the development server:
+>
+  # Comandos para rodar o projeto
+    ```bash
+    clonar o repositório git clone https://github.com/fabianomarcos/marvel.git
+    rodar mpm i
+    npm run dev
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+  # Breve descrição das tecnologias utilizadas
+    Projeto criado com NextJs
+    Utilizando styled-components
+    Todas as requisições de login são realizadas pelo servidor Node do Next.
+    Os usuários são guardados em memória, usuários iniciais:
+      {
+        id: '1d66e534-c560-4389-adc6-1da629286c4e',
+        email: 'geronimo@email.com',
+        password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS'
+      },
+      {
+        id: '2d66e534-c560-4389-adc6-1da629286c4e',
+        email: 'ana@email.com',
+        password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS'
+      },
+      {
+        id: '3d66e534-c560-4389-adc6-1da629286c4e',
+        email: 'jair@email.com',
+        password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS'
+      },
+      Todas as senhas são 123456
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  # Utilização das funcionalidades - Fluxo
+    1 - http://localhost:3000/login
+      Utilizar um dos emails e senhas acima para entrar na plataforma;
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    2 - Caso a pessoa já tenha escolhido o agente preferido o mesmo ficará salvo no link de perfil, caso contrário será redirecionado para a tela de escolha do agente. http://localhost:3000/agent;
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    3 - Voltando à tela de login podemos criar um novo usuário, clicando em Cadastrar usuário. O mesmo será redirecionado para a url http://localhost:3000/create-user, onde deverá colocar um email não cadastrado, uma senha e confirmação da mesma;
 
-## Learn More
+    4 - Ao clicar em Esqueceu a senha? O usuário colocando um email cadastrado será redirecionado para a rota de alteração de senha, obs.: o jeito correto seria pelo token recebido pelo email. http://localhost:3000/reset-password
 
-To learn more about Next.js, take a look at the following resources:
+    5 - Colocando um email válido e a senha e confirmação iguais, sua senha será redefinida e o usuário será redirecionado para logar na aplicação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    6 - Ao logar o usuário tem a opção de buscar po algum agente, através do input de busca, pode clicar em cada card e ver as informações do  perfil desejado, ou passear pela paginação no rodapé. Obs.: Limitei a 100 agents, pois não encontrei na documentação como buscar por página, então fiz uma paginação pelo frontend.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    7 - No perfil o usuário pode caminhar pelas abas e verificar as informações do agente.
 
-## Deploy on Vercel
+    No final tive alguns imprevistos pessoais e não tive tempo de montar um layout para smartphone
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
