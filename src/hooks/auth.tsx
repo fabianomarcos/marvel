@@ -30,7 +30,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 function AuthProvider({ children }: any) {
   const [data, setData] = useState<AuthState>(() => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem(StorageEnum.token) || ''
+      const token = localStorage.getItem(StorageEnum.token)
       const user = localStorage.getItem(StorageEnum.user)
 
       if (token && user && user !== 'undefined') {
