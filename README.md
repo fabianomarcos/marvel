@@ -50,7 +50,7 @@
 
     7 - No perfil o usuário pode caminhar pelas abas e verificar as informações do agente.
 
-    No final tive alguns imprevistos pessoais e não tive tempo de montar um layout para smartphone
+    Layout para smartphone a montar
 
 >
 
