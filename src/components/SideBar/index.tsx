@@ -8,14 +8,22 @@ import IconRouter from './components'
 import { Container, ContainerImg, ContainerLinks } from './styles'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
+import { useToast } from '@/hooks/toast'
 
 export default function SideBar() {
   const router = useRouter()
+  const {addToast} = useToast()
   const isActive = router.pathname === '/perfil/[name]'
   const { signOut } = useAuth()
 
   const logout = () => {
     signOut()
+    addToast({
+      title: "Sucesso",
+      type: "success",
+      description:
+        "Você foi desconectado da aplicação corretamente, até logo!",
+      });
     router.push('/login')
   }
 

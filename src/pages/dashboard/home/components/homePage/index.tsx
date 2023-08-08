@@ -9,19 +9,21 @@ import {
 import CardInfo from "../cardInfo";
 import { Pagination } from "@/components/Pagination";
 import { useStore } from "@/hooks/store";
+import { useLogout } from "@/hooks/useLogout";
 
 export function HomePage() {
+  const { logger } = useLogout()
   const { characters, getAgents, loading, count, setPage, page } = useStore();
   const limitPage = page * 12;
   const perPage = 10;
-  const limit = 100
+  const limit = 100;
   const pageStart = count <= limitPage ? 1 : (page - 1) * perPage;
   const pageEnd = count <= limitPage ? 10 : pageStart + perPage;
 
   useEffect(() => {
+    logger();
     getAgents({ limit });
   }, []);
-
 
   const paginatedCharacter = characters.slice(pageStart, pageEnd);
 
