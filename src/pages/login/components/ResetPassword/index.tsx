@@ -3,9 +3,7 @@ import { useRouter } from 'next/router'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 
-import { At, Eye, EyeClosed, SignIn } from 'phosphor-react'
-
-import { Container, ContainerInput } from './styles'
+import { Container } from './styles'
 import getValidationErrors from '@/utils/getValidationErrors'
 import { useToast } from '@/hooks/toast'
 import FormTitle from '../TitleForm'
