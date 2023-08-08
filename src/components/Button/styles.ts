@@ -17,8 +17,13 @@ export const Container = styled.button`
   font-size: 24px;
   letter-spacing: -1.56px;
   transition: background-color 0.2s;
+  font-weight: 700;
 
   &:hover {
     background: ${shade(0.2, '#213770')};
+  }
+
+  &:disabled {
+    background: ${({ theme }) => theme.COLORS.GRAY_200};
   }
 `
