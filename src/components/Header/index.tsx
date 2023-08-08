@@ -5,19 +5,13 @@ import { useSearch } from "@/hooks/useDebounce";
 import { useStore } from "@/hooks/store";
 
 import { Container, Search } from "./styles";
-import { StorageEnum } from "@/utils/storageEnum";
-
-interface IUser {
-  email: string;
-}
+import { useAuth } from "@/hooks/auth";
+import { useRouter } from "next/router";
 
 export default function Header() {
-  let user = null
-  if (typeof window !== "undefined") {
-    user = localStorage.getItem(StorageEnum.user);
-  }
-
-  if (user && user !== "undefined") user = JSON.parse(user);
+  const { user } = useAuth()
+  const router = useRouter()
+  const showInputSearch = router.pathname !== '/perfil/[id]'
   const [inputValue, setInputValue] = useState("");
   const { debouncedValue } = useSearch({ delay: 400, value: inputValue });
 
@@ -31,15 +25,15 @@ export default function Header() {
 
   return (
     <Container>
-      <Search>
+      {showInputSearch ? <Search>
         <FiSearch size={20} />
         <input
           placeholder="Busque um agente"
           onChange={(event) => getSearchParams(event.target.value)}
         />
-      </Search>
+      </Search> : <div />}
       <span>
-        Bem vindo(a) <strong>{(user as unknown as IUser)?.email}</strong>
+        Bem vindo(a) <strong>{user?.email}</strong>
       </span>
     </Container>
   );
