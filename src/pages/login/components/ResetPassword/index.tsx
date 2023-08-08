@@ -39,7 +39,7 @@ export default function FormResetPassword() {
 
         await api.put('/reset-password', data)
 
-        await router.push('/login')
+        await router.push('/reset-password/success')
 
         addToast({
           type: 'success',

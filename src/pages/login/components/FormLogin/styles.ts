@@ -12,6 +12,11 @@ export const Container = styled.div`
   a {
     text-decoration: none;
   }
+
+  @media (max-width: 1180px) {
+    width: 580px;
+    height: 470px;
+  }
 `
 
 export const ContainerInput = styled.div`
@@ -20,6 +25,11 @@ export const ContainerInput = styled.div`
   gap: 1.5rem;
   margin-bottom: 11px;
   width: 100%;
+
+  @media (max-width: 1180px) {
+    gap: 2rem;
+    margin-bottom: 36px;
+  }
 `
 
 export const LinkContainer = styled.div`
@@ -27,6 +37,10 @@ export const LinkContainer = styled.div`
   justify-content: end;
   margin: 1rem 0.375rem 0 0;
   gap: 5px;
+
+  @media (max-width: 1180px) {
+    margin-top: 1.4rem;
+  }
 `
 
 export const ForgotPasswordContainer = styled.div`
