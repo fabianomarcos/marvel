@@ -23,4 +23,10 @@ export const BuildImage = styled.div`
   align-items: end;
   gap: 140px;
   padding: 100px 200px;
+
+  @media (max-width: 1180px) {
+     img {
+      display: none;
+     }
+  }
 `;

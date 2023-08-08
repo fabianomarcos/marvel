@@ -5,7 +5,7 @@ import { Container } from './styles'
 import { Button } from '@/components/Button'
 import FormTitle from '../TitleForm'
 
-export default function SuccessResetPassword() {
+export function SuccessResetPassword() {
   const router = useRouter()
   const onSubmit = () => router.push('/login')
 
@@ -13,12 +13,12 @@ export default function SuccessResetPassword() {
     <Container>
       <FormTitle
         title="Tudo certo"
-        complement=";)"
+        complement=" ;)"
         infoForUser="Senha alterada com sucesso, agora você pode realizar seu login"
       />
 
       <Form onSubmit={onSubmit}>
-        <Button>
+        <Button type='submit'>
           voltar para o login
         </Button>
       </Form>
