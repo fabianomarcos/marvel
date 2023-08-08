@@ -3,3 +3,6 @@ export const configMarvelApi = {
   apiKey: '84298906947897acf4e934960916dfef',
   hash: '0efe6c0a45c750a69c3f3c294f99dcc2',
 }
+
+export const URLMarvelApi =
+  `?ts=${configMarvelApi.timestamp}&apikey=${configMarvelApi.apiKey}&hash=${configMarvelApi.hash}`

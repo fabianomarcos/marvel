@@ -50,8 +50,6 @@ export default function FormLogin() {
           description: 'Bem vindo à plataforma.',
         })
       } catch (err: any) {
-        console.log('err: ', err);
-        console.log('err: ', err.response);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
           formRef.current?.setErrors(errors)

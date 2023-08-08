@@ -1,14 +1,17 @@
-import React from 'react'
+import React from "react";
 
-import { AuthProvider } from './auth'
-import { ToastProvider } from './toast'
+import { AuthProvider } from "./auth";
+import { ToastProvider } from "./toast";
+import { StoreProvider } from "./store";
 
 function AppProvider({ children }: any) {
   return (
     <AuthProvider>
-      <ToastProvider>{children}</ToastProvider>
+      <StoreProvider>
+        <ToastProvider>{children}</ToastProvider>
+      </StoreProvider>
     </AuthProvider>
-  )
+  );
 }
 
-export default AppProvider
+export default AppProvider;

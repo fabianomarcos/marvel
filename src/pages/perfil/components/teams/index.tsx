@@ -1,5 +1,5 @@
 import { IInfoCharacters } from "@/interfaces/types";
-import { Container } from "../globalStylesComponents/styles";
+import { UL } from "../globalStylesComponents/styles";
 
 interface IProps {
   character: IInfoCharacters;
@@ -7,10 +7,10 @@ interface IProps {
 
 export function Teams({ character }: IProps) {
   return (
-    <Container>
+    <UL>
       <li>Avengers</li>
       <li>Defenders</li>
       <li>Fantastic Four</li>
-    </Container>
+    </UL>
   );
 }

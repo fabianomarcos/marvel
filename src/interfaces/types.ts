@@ -4,3 +4,7 @@ export interface IInfoCharacters {
   thumbnail: { path: string; extension: string };
   description: string;
 }
+
+export interface ICreator {
+  name: string
+}
