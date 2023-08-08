@@ -28,7 +28,7 @@ export function Authors() {
 
   return (
     <UL>
-      {creators?.map((item: any) => {
+      {creators?.map((item) => {
         return <li key={item.name}>{item.name}</li>;
       })}
     </UL>

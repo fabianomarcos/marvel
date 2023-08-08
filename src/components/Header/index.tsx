@@ -11,10 +11,11 @@ export default function Header() {
   const { debouncedValue } = useSearch({ delay: 400, value: inputValue });
 
   const getSearchParams = (param: string) => setInputValue(param);
-  const { getAgents } = useStore()
+  const { getAgents, setPage } = useStore()
 
   useEffect(() => {
-    getAgents({ limit: 10, name: debouncedValue })
+    setPage(1)
+    getAgents({ limit: 100, name: debouncedValue })
   }, [debouncedValue])
 
   return (

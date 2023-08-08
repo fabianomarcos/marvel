@@ -1,7 +1,4 @@
 import React, { createContext, useCallback, useState, useContext, useEffect } from 'react'
-import { apiMarvel } from '@/lib/axios'
-import { configMarvelApi } from '@/utils/configMarvelApi'
-import { IInfoCharacters } from '@/interfaces/types'
 
 interface StoreContextData {
   value: string

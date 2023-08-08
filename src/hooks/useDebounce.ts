@@ -9,7 +9,6 @@ interface IInputSearch {
 export function useSearch({ delay = 300, value }: IInputSearch) {
   const [debouncedValue, setValue] = useState("");
   const { characters } = useStore();
-  console.log('results: ', characters);
 
   useEffect(() => {
     const handler = setTimeout(() => setValue(value), delay);
@@ -17,7 +16,6 @@ export function useSearch({ delay = 300, value }: IInputSearch) {
   }, [value]);
 
   const results = characters.filter((character) => character.name.includes(debouncedValue))
-  console.log("results: ", results);
 
   return { debouncedValue, results };
 }

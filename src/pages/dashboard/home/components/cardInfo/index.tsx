@@ -14,8 +14,8 @@ export default function CardInfo({ infoCharacters }: IProps) {
       {infoCharacters?.map((info) => {
         if (info?.id) {
           const formattedDescription =
-            info.description.length > 180
-              ? `${info.description.substring(0, 180)}...`
+            info.description.length > 170
+              ? `${info.description.substring(0, 170)}...`
               : info.description;
 
           return (

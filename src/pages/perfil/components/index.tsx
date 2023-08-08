@@ -29,7 +29,6 @@ export function Perfil() {
           data: { results },
         },
       } = await request;
-      console.log("data.results: ", results);
       setCharacter(results[0]);
     };
     if (id) getAgent();
