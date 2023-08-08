@@ -5,7 +5,7 @@ import React, {
   useState,
   useCallback,
 } from 'react'
-import { Activity, IconProps } from 'phosphor-react'
+import { Info, IconProps } from 'phosphor-react'
 import { useField } from '@unform/core'
 import { Container, Error } from './styles'
 
@@ -52,9 +52,6 @@ export function Input({
     <Container
       style={containerStyle}
       is_error={!!error}
-      is_filled={isFilled}
-      is_focused={isFocused}
-      data-testid="input-container"
     >
       <input
         onFocus={handleInputFocus}
@@ -67,7 +64,7 @@ export function Input({
 
       {error && (
         <Error title={error}>
-          <Activity color="#c53030" size={20} />
+          <Info  color="#c53030" size={20} />
         </Error>
       )}
     </Container>
