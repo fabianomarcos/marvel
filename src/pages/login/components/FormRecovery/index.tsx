@@ -32,7 +32,6 @@ export default function FormLogin() {
     const message = "Campo obrigatório";
     const schema = Yup.object().shape({
       email: Yup.string().required(message).email("Digite um email válido"),
-      password: Yup.string().required(message),
     });
     return { schema };
   };
