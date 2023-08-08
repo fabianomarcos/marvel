@@ -16,7 +16,6 @@ export function useLogout() {
       const user = localStorage.getItem(StorageEnum.user);
       const isLogged =
         token && user && user !== "undefined" && token !== "undefined";
-      console.log("isLogged: ", isLogged);
 
       if (!isLogged) {
         signOut();

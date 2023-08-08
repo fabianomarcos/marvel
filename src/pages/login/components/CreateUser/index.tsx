@@ -21,6 +21,13 @@ export default function FormCreateUser() {
   const { addToast } = useToast()
   const router = useRouter()
 
+  const showToast = () =>
+  addToast({
+    type: 'success',
+    title: 'Usuário criado com sucesso',
+    description: 'Tudo certo.',
+  })
+
   const handleSubmit = useCallback(
     async (data: CreateFormData) => {
       try {
@@ -36,15 +43,11 @@ export default function FormCreateUser() {
 
         await schema.validate(data, { abortEarly: false })
 
-        const user = await api.post('/users', data)
+        await api.post('/users', data)
 
-        await router.push('/login')
+        await router.push('/agent')
 
-        addToast({
-          type: 'success',
-          title: 'Usuário criado com sucesso',
-          description: 'Tudo certo.',
-        })
+        showToast()
       } catch (err: any) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)

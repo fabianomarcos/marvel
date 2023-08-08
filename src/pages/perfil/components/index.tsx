@@ -11,8 +11,10 @@ import { Powers } from "./powers";
 import { Species } from "./species";
 import { Authors } from "./authors";
 import { IInfoCharacters } from "@/interfaces/types";
+import { useLogout } from "@/hooks/useLogout";
 
 export function Perfil() {
+  const { logger } = useLogout();
   const [activatedInfo, setActivatedInfo] = useState("general");
   const [character, setCharacter] = useState({} as IInfoCharacters);
   const router = useRouter();
@@ -20,6 +22,7 @@ export function Perfil() {
   const id = router.query.id;
 
   useEffect(() => {
+    logger()
     const getAgent = async () => {
       const request = apiMarvel.get(
         `/characters/${id}?ts=${timestamp}&apikey=${apiKey}&hash=${hash}&limite=12`
@@ -33,7 +36,6 @@ export function Perfil() {
     };
     if (id) getAgent();
   }, []);
-  console.log("character: ", character);
 
   const isActivated = (tab: string) =>
     ({
