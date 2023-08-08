@@ -15,6 +15,7 @@ import { useAuth } from '@/hooks/auth'
 import getValidationErrors from '@/utils/getValidationErrors'
 import { useToast } from '@/hooks/toast'
 import FormTitle from '../TitleForm'
+import { StorageEnum } from '@/utils/storageEnum'
 
 export type SignInFormData = {
   email: string
@@ -28,43 +29,69 @@ export default function FormLogin() {
   const { addToast } = useToast()
   const router = useRouter()
 
+  const showToast = () => addToast({
+    type: 'success',
+    title: 'Autenticação realizada com sucesso',
+    description: 'Bem vindo à plataforma.',
+  })
+
+  const validateSchema = () => {
+    formRef.current?.setErrors({})
+    const message = 'Campo obrigatório'
+    const schema = Yup.object().shape({
+      email: Yup.string().required(message).email('Digite um email válido'),
+      password: Yup.string().required(message),
+    })
+    return { schema };
+  }
+
+  const handleError = (err: any) => {
+    if (err instanceof Yup.ValidationError) {
+      const errors = getValidationErrors(err)
+      formRef.current?.setErrors(errors)
+    }
+
+    const description =
+      err?.response?.data?.message||
+      err?.message ||
+      'Ocorreu um erro ao fazer login, cheque as credenciais.'
+
+    addToast({
+      type: 'error',
+      title: 'Erro na autenticação',
+      description,
+    })
+  }
+
+  const redirectToHomePage = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      const favoriteId = localStorage.getItem(StorageEnum.favorite)
+      if (favoriteId && favoriteId !== 'undefined') {
+        router.push('/')
+        showToast()
+        return true
+      }
+    }
+    return false
+  }, [])
+
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
       try {
-        formRef.current?.setErrors({})
-        const message = 'Campo obrigatório'
-        const schema = Yup.object().shape({
-          email: Yup.string().required(message).email('Digite um email válido'),
-          password: Yup.string().required(message),
-        })
-
+        const { schema } = validateSchema()
         await schema.validate(data, { abortEarly: false })
 
         await login(data)
 
-        await router.push('/')
+        const sendToHomePage = redirectToHomePage()
 
-        addToast({
-          type: 'success',
-          title: 'Autenticação realizada com sucesso',
-          description: 'Bem vindo à plataforma.',
-        })
+        if (sendToHomePage) return
+
+        await router.push('/agent')
+
+        showToast()
       } catch (err: any) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err)
-          formRef.current?.setErrors(errors)
-        }
-
-        const description =
-          err?.response?.data?.message||
-          err?.message ||
-          'Ocorreu um erro ao fazer login, cheque as credenciais.'
-
-        addToast({
-          type: 'error',
-          title: 'Erro na autenticação',
-          description,
-        })
+        handleError(err)
       }
     },
     [addToast, login, router],
