@@ -1,9 +1,18 @@
 import { styled } from 'styled-components'
 
 export const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 60px;
   border-bottom: 1px solid ${({ theme }) => theme.COLORS.DIVIDER};
+
+  > span {
+    padding: 24px;
+    margin-right: 60px;
+    color: ${({ theme }) => theme.COLORS.PRIMARY_500};
+  }
 `
 export const Search = styled.div`
   display: flex;
