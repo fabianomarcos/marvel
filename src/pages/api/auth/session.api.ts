@@ -20,8 +20,9 @@ export default async function handler(
     })
 
     return res.status(201).json({ user, token })
-  } catch (error: any) {
+  } catch (error) {
+    const err = error as { message: string }
     console.error('error: ', error)
-    return res.status(401).json({ message: error.message })
+    return res.status(401).json({ message: err.message })
   }
 }

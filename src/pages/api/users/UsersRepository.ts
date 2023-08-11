@@ -1,21 +1,12 @@
-import { v4 as uuid } from 'uuid'
 import { compare, hash } from 'bcryptjs'
 import IUsersRepository, { ICreateUserDTO } from './IUserRepository'
 import { User } from './User'
+import { prisma } from '@/lib/prisma'
 
 class UsersRepository implements IUsersRepository {
-  private users: User[]
-  fakeUsers = [
-    { id: '1d66e534-c560-4389-adc6-1da629286c4e', email: 'geronimo@email.com', password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS' },
-    { id: '2d66e534-c560-4389-adc6-1da629286c4e', email: 'ana@email.com', password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS' },
-    { id: '3d66e534-c560-4389-adc6-1da629286c4e', email: 'jair@email.com', password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS' },
-  ]
-
   private static INSTANCE: IUsersRepository
 
-  private constructor() {
-    this.users = this.fakeUsers
-  }
+  private constructor() {}
 
   public static getInstance(): IUsersRepository {
     UsersRepository.INSTANCE = UsersRepository.INSTANCE
@@ -33,27 +24,14 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const findUser = this.users.find((user) => user.email === email)
+    const findUser = await prisma.user.findUnique({
+      where: { email }
+    }) as User | undefined;
     return findUser
   }
 
   public async create(userData: ICreateUserDTO): Promise<User> {
-    const user = new User()
-
-    Object.assign(user, { id: uuid() }, userData)
-
-    this.users.push(user)
-
-    return user
-  }
-
-  public async save(user: User): Promise<User> {
-    const findIndex = this.users.findIndex(
-      (findUser) => findUser.id === user.id,
-    )
-
-    this.users[findIndex] = user
-
+    const user =  await prisma.user.create({ data: userData }) as User;
     return user
   }
 }
