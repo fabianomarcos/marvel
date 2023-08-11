@@ -6,11 +6,7 @@ import { URLMarvelApi } from "@/utils/configMarvelApi";
 import { useParams } from "@/hooks/useParams";
 import { Loader } from "@/components/Loader";
 
-interface IProps {
-  character: IInfoCharacters;
-}
-
-export function Powers({ character }: IProps) {
+export function Powers() {
   const [showLoader, setShowLoader] = useState(false);
   const [powers, setPowers] = useState<ICreator[]>([]);
   const id = useParams("id");

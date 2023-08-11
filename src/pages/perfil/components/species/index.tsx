@@ -6,11 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "@/hooks/useParams";
 import { Loader } from "@/components/Loader";
 
-interface IProps {
-  character: IInfoCharacters;
-}
-
-export function Species({ character }: IProps) {
+export function Species() {
   const [showLoader, setShowLoader] = useState(false);
   const [species, setSpecies] = useState<ICreator[]>([]);
   const id = useParams("id");
