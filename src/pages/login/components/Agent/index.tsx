@@ -24,7 +24,7 @@ export default function Agent() {
 
   const onSubmit = () => {
     localStorage.setItem(StorageEnum.favorite, agentId)
-    router.push('/')
+    router.push('/login')
   }
 
   useEffect(() => {
@@ -34,7 +34,6 @@ export default function Agent() {
   const handleInputChange = (event: any) => {
     event.preventDefault();
     const { value } = event.target;
-    console.log('values: ', value);
     setAgentId(value)
   }
 
