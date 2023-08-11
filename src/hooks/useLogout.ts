@@ -8,7 +8,6 @@ export function useLogout() {
   const { signOut } = useAuth();
   const { addToast } = useToast();
   const router = useRouter();
-  console.log("typeof window: ", typeof window);
 
   const logger = useCallback(() => {
     if (typeof window !== "undefined") {
