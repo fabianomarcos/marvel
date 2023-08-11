@@ -89,11 +89,11 @@ export function Perfil() {
         <General character={character} />
       )}
 
-      {isActivated("teams") && <Teams character={character} />}
+      {isActivated("teams") && <Teams />}
 
-      {isActivated("powers") && <Powers character={character} />}
+      {isActivated("powers") && <Powers />}
 
-      {isActivated("species") && <Species character={character} />}
+      {isActivated("species") && <Species />}
 
       {isActivated("authors") && <Authors />}
     </Container>

@@ -16,6 +16,10 @@ class CreateUserService {
 
     if (checkUserExist) throw new Error('Este email já é utilizado.')
 
+    const isEqualPasswords = confirm_password === password
+
+    if (!isEqualPasswords) throw new Error('As senhas não são iguais')
+
     const hashedPassword = await this.usersRepository.generateHash(password)
 
     const user = await this.usersRepository.create({

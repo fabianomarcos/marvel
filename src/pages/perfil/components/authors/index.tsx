@@ -5,13 +5,16 @@ import { ICreator } from "@/interfaces/types";
 import { UL } from "../globalStylesComponents/styles";
 import { URLMarvelApi } from "@/utils/configMarvelApi";
 import { useParams } from "@/hooks/useParams";
+import { Loader } from "@/components/Loader";
 
 export function Authors() {
+  const [showLoader, setShowLoader] = useState(false);
   const [creators, setCreators] = useState<ICreator[]>([]);
   const id = useParams("id");
 
   useEffect(() => {
     const getCreators = async () => {
+      setShowLoader(true);
       const {
         data: { data: { results } },
       } = await apiMarvel.get(`/characters/${id}/stories${URLMarvelApi}`);
@@ -21,6 +24,7 @@ export function Authors() {
       )[0];
 
       setCreators(creatorFormatted);
+      setShowLoader(false);
     };
 
     getCreators();
@@ -28,6 +32,7 @@ export function Authors() {
 
   return (
     <UL>
+      {showLoader && <Loader />}
       {creators?.map((item) => {
         return <li key={item.name}>{item.name}</li>;
       })}
