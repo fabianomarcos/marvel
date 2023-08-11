@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/toast'
 import FormTitle from '../TitleForm'
 import { api } from '@/lib/axios'
 import { FormCreateAndResetUser } from '../FormCreateAndResetUser'
+import { Loader } from '@/components/Loader'
 
 export type CreateFormData = {
   email: string
@@ -17,19 +18,21 @@ export type CreateFormData = {
 }
 
 export default function FormCreateUser() {
+  const [showLoader, setShowLoader] = useState(false)
   const formRef = useRef<FormHandles>(null)
   const { addToast } = useToast()
   const router = useRouter()
 
   const showToast = () =>
-  addToast({
-    type: 'success',
-    title: 'Usuário criado com sucesso',
-    description: 'Tudo certo.',
-  })
+    addToast({
+      type: 'success',
+      title: 'Usuário criado com sucesso',
+      description: 'Tudo certo.',
+    })
 
   const handleSubmit = useCallback(
     async (data: CreateFormData) => {
+      setShowLoader(true)
       try {
         formRef.current?.setErrors({})
         const message = 'Campo obrigatório'
@@ -37,7 +40,7 @@ export default function FormCreateUser() {
           password: Yup.string().required(message),
           password_confirmation: Yup.string().oneOf(
             [Yup.ref('password'), undefined],
-            'As Senhas não conferem.',
+            'As Senhas não conferem.'
           ),
         })
 
@@ -45,34 +48,42 @@ export default function FormCreateUser() {
 
         await api.post('/users', data)
 
+        setShowLoader(false)
+
         await router.push('/agent')
 
         showToast()
       } catch (err: any) {
+        let description =
+          err.message ||
+          'Ocorreu um erro ao redefinir as senhas, cheque as credenciais.'
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
+          console.log('errors: ', errors)
           formRef.current?.setErrors(errors)
+          description = errors
         }
 
         addToast({
           type: 'error',
           title: 'Erro na criação do usuário',
-          description:
-            err.message || 'Ocorreu um erro ao redefinir as senhas, cheque as credenciais.',
+          description: err?.response?.data?.message || description,
         })
+        setShowLoader(false)
       }
     },
-    [addToast, router],
+    [addToast, router]
   )
 
   return (
     <Container>
+      {showLoader && <Loader />}
       <FormTitle
         title="Criar usuário"
         complement="."
         infoForUser="Informe seu email e senha para acesso ao portal"
       />
-      <FormCreateAndResetUser label='enviar' handleSubmit={handleSubmit}/>
+      <FormCreateAndResetUser label="enviar" handleSubmit={handleSubmit} />
     </Container>
   )
 }

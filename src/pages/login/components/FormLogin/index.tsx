@@ -16,6 +16,7 @@ import getValidationErrors from '@/utils/getValidationErrors'
 import { useToast } from '@/hooks/toast'
 import FormTitle from '../TitleForm'
 import { StorageEnum } from '@/utils/storageEnum'
+import { Loader } from '@/components/Loader'
 
 export type SignInFormData = {
   email: string
@@ -23,6 +24,7 @@ export type SignInFormData = {
 }
 
 export default function FormLogin() {
+  const [showLoader, setShowLoader] = useState(false);
   const [closedEye, setClosedEye] = useState(true)
   const formRef = useRef<FormHandles>(null)
   const { signIn: login } = useAuth()
@@ -56,6 +58,8 @@ export default function FormLogin() {
       err?.message ||
       'Ocorreu um erro ao fazer login, cheque as credenciais.'
 
+    setShowLoader(false);
+
     addToast({
       type: 'error',
       title: 'Erro na autenticação',
@@ -65,6 +69,7 @@ export default function FormLogin() {
 
   const redirectToHomePage = useCallback(() => {
     if (typeof window !== 'undefined') {
+      setShowLoader(false);
       const favoriteId = localStorage.getItem(StorageEnum.favorite)
       if (favoriteId && favoriteId !== 'undefined') {
         router.push('/')
@@ -78,6 +83,7 @@ export default function FormLogin() {
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
       try {
+        setShowLoader(true);
         const { schema } = validateSchema()
         await schema.validate(data, { abortEarly: false })
 
@@ -86,6 +92,8 @@ export default function FormLogin() {
         const sendToHomePage = redirectToHomePage()
 
         if (sendToHomePage) return
+
+        setShowLoader(false);
 
         await router.push('/agent')
 
@@ -101,6 +109,7 @@ export default function FormLogin() {
 
   return (
     <Container>
+      {showLoader && <Loader />}
       <FormTitle
         title="Bem-vindo"
         complement="."
