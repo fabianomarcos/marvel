@@ -24,7 +24,6 @@ export default function FormLogin() {
   const [showLoader, setShowLoader] = useState(false);
   const formRef = useRef<FormHandles>(null);
   const [disabled, setDisabled] = useState(true);
-  console.log("disabled: ", disabled);
   const { signIn: login } = useAuth();
   const { addToast } = useToast();
   const router = useRouter();

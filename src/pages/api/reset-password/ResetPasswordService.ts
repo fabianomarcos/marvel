@@ -23,8 +23,8 @@ class ResetPasswordService {
     if (!isEqualPasswords) throw new Error('As senhas não são iguais')
 
     checkUserExist.password = await this.usersRepository.generateHash(password)
-
-    return checkUserExist
+    const user = await this.usersRepository.update(checkUserExist)
+    return user
   }
 }
 
