@@ -23,8 +23,8 @@ export const NotFoundItem = styled.h1`
 `;
 
 export const CardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 `;
 
