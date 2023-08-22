@@ -18,11 +18,12 @@ import { useToast } from "@/hooks/toast";
 import getValidationErrors from "@/utils/getValidationErrors";
 
 import { Container, ContainerInput } from "./styles";
+import { Loader } from "@/components/Loader";
 
 export default function FormLogin() {
+  const [showLoader, setShowLoader] = useState(false);
   const formRef = useRef<FormHandles>(null);
   const [disabled, setDisabled] = useState(true);
-  console.log("disabled: ", disabled);
   const { signIn: login } = useAuth();
   const { addToast } = useToast();
   const router = useRouter();
@@ -38,6 +39,7 @@ export default function FormLogin() {
 
   const handleSubmit = useCallback(
     async (dataEmail: { email: string }) => {
+      setShowLoader(true);
       try {
         const { schema } = validateSchema();
 
@@ -47,6 +49,8 @@ export default function FormLogin() {
           `users/${dataEmail.email}`
         );
 
+        setShowLoader(false);
+
         if (data?.user?.id) await router.push(`/reset-password`);
 
         addToast({
@@ -55,6 +59,9 @@ export default function FormLogin() {
           description: "Usuário.",
         });
       } catch (err: any) {
+        const description =
+          err.message ||
+          "Ocorreu um erro ao fazer login, cheque as credenciais.";
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current?.setErrors(errors);
@@ -63,10 +70,9 @@ export default function FormLogin() {
         addToast({
           type: "error",
           title: "Erro na autenticação",
-          description:
-            err.message ||
-            "Ocorreu um erro ao fazer login, cheque as credenciais.",
+          description: err?.response?.data?.message || description,
         });
+        setShowLoader(false);
       }
     },
     [addToast, login, router]
@@ -84,6 +90,7 @@ export default function FormLogin() {
       />
 
       <Form ref={formRef} onSubmit={handleSubmit}>
+        {showLoader && <Loader />}
         <ContainerInput>
           <Input
             name="email"

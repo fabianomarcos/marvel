@@ -34,6 +34,11 @@ class UsersRepository implements IUsersRepository {
     const user =  await prisma.user.create({ data: userData }) as User;
     return user
   }
+
+  public async update(user: User): Promise<User> {
+    await prisma.user.update({ where: { email: user.email }, data: { ...user }})
+    return user
+  }
 }
 
 export default UsersRepository

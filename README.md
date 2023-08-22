@@ -3,24 +3,22 @@
     clonar o repositório git clone https://github.com/fabianomarcos/marvel.git
     rodar mpm i
     npm run dev
+    criar na raiz do projeto um arquivo .env com a seguinte variável DATABASE_URL="file:./dev.db"
 
   # Breve descrição das tecnologias utilizadas
     Projeto criado com NextJs
     Utilizando styled-components
     Todas as requisições de login são realizadas pelo servidor Node do Next.
-    Os usuários são guardados em memória, usuários iniciais:
+    Os usuários são no sqlite, usuários iniciais:
       {
-        id: '1d66e534-c560-4389-adc6-1da629286c4e',
         email: 'geronimo@email.com',
         password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS'
       },
       {
-        id: '2d66e534-c560-4389-adc6-1da629286c4e',
         email: 'ana@email.com',
         password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS'
       },
       {
-        id: '3d66e534-c560-4389-adc6-1da629286c4e',
         email: 'jair@email.com',
         password: '$2a$08$xNlUZ2I09svqqJO/0Anl4eJMn/Xi8AbZmDUroLfSwxtkwwo2ZRykS'
       },
