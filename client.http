@@ -1,0 +1,10 @@
+@localhost = http://localhost:3000/api
+@production = https://marvel-a4vef83cs-fabianomarcos-projects.vercel.app/api
+
+### students
+# @name students
+GET {{production}}/students HTTP/1.1
+
+### students
+# @name students
+GET {{localhost}}/students HTTP/1.1

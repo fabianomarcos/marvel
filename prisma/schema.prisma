@@ -3,15 +3,539 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model User {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  password   String
-  created_at DateTime @default(now())
+model alunos {
+  id                    Int        @id @default(autoincrement())
+  alunonome             String?    @db.VarChar(500)
+  alunonascimento       String?    @db.VarChar(500)
+  alunorg               String?    @db.VarChar(500)
+  alunocpf              String?    @db.VarChar(500)
+  responsavelnome       String?    @db.VarChar(500)
+  responsavelcpf        String?    @db.VarChar(500)
+  responsavelemail      String?    @db.VarChar(500)
+  responsavelnascimento String?    @db.VarChar(500)
+  responsaveltelefone   String?    @db.VarChar(500)
+  responsaveltelefone2  String?    @db.VarChar(500)
+  status                String?    @db.VarChar(50)
+  email                 String?    @db.VarChar(500)
+  senha                 String?    @db.VarChar(500)
+  excluido              String?    @db.VarChar(3)
+  logusuario            Int?
+  ultimaescola          String?    @db.VarChar(200)
+  cep                   String?    @db.VarChar(15)
+  endereco              String?    @db.VarChar(150)
+  conheceu              String?    @db.VarChar(100)
+  accepted_terms        Boolean?
+  family_income         Float?
+  second_phone          String?
+  code_pe               String?
+  logdata               DateTime?  @default(now())
+  updated_at            DateTime?  @default(now())
+  friend_pe             friend_pe? @relation(fields: [friend_pe_id], references: [id], onDelete: Cascade)
+  friend_pe_id          String?
 
-  @@map("users")
+  @@index([friend_pe_id])
+}
+
+model friend_pe {
+  id               String   @id @default(uuid())
+  chave_pix        String   @unique
+  email            String   @unique
+  name             String
+  phone            String
+  second_phone     String?
+  status           String
+  total_receivable Int?     @default(0)
+  total_received   Int?     @default(0)
+  code             String   @unique
+  created_at       DateTime @default(now())
+
+  students alunos[]
+  payments payments_friends[]
+
+  @@map("friends")
+}
+
+model payments_friends {
+  id             String   @id @default(uuid())
+  receipt_number String   @unique
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now())
+
+  friend_pe    friend_pe? @relation(fields: [friend_pe_id], references: [id])
+  friend_pe_id String?
+
+  @@index([friend_pe_id])
+}
+
+model blogs {
+  id         String   @id @default(uuid())
+  title      String
+  content    String
+  image_url  String   @db.Text
+  url        String   @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model InterestedPartner {
+  id             String  @id @default(uuid())
+  institute_name String
+  cnpj           String  @unique
+  email          String
+  phone          String
+  responsible    String
+  city           String
+  message        String
+  contacted      Boolean @default(false)
+  status         String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("interested_partners")
+}
+
+model alunoscursos {
+  id                     Int       @id @default(autoincrement())
+  idcurso                Int?
+  idaluno                Int?
+  codigo_amigo           String?
+  statuspagamento        String?   @db.VarChar(50)
+  pagsegurodatapagamento DateTime? @db.DateTime(0)
+  pagseguroid            String?   @db.VarChar(500)
+  status                 String?   @db.VarChar(50)
+  pendente               String?   @db.VarChar(3)
+  excluido               String?   @db.VarChar(3)
+  logusuario             Int?
+  logdata                DateTime? @db.DateTime(0)
+}
+
+model amigo {
+  id        Int     @id @default(autoincrement())
+  codigo    String?
+  chave_pix String?
+  email     String?
+  nome      String?
+  telefone  String?
+}
+
+model arquivos {
+  id             Int       @id @default(autoincrement())
+  filename       String?   @db.VarChar(255)
+  size           Int?
+  ordem          Int?
+  logdata        DateTime? @db.DateTime(0)
+  logusuario     Int?
+  logusuariotipo String?   @db.VarChar(20)
+  excluido       String?   @db.VarChar(3)
+}
+
+model banners {
+  id         Int       @id @default(autoincrement())
+  idimagem   Int?
+  link       String?   @db.MediumText
+  titulo     String?   @db.VarChar(500)
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logdata    DateTime? @db.DateTime(0)
+  logusuario Int?
+}
+
+model categorias {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model categoriascursos {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model cidades {
+  id         Int      @id @default(autoincrement())
+  idestado   Int
+  uf         String?  @db.VarChar(2)
+  nome       String   @db.VarChar(255)
+  logusuario Int
+  logdata    DateTime @db.DateTime(0)
+  excluido   String   @db.VarChar(3)
+}
+
+model configuracoes {
+  id         Int     @id @default(autoincrement())
+  chave      String  @db.VarChar(255)
+  valor      String  @db.Text
+  descricao  String  @db.Text
+  tipo       String  @db.VarChar(20)
+  instrucoes String? @db.Text
+  excluido   String  @db.VarChar(3)
+}
+
+model contatos {
+  id          Int       @id @default(autoincrement())
+  data        DateTime? @db.Date
+  hora        String?   @db.VarChar(5)
+  ip          String?   @db.VarChar(50)
+  nome        String?   @db.VarChar(500)
+  email       String?   @db.VarChar(500)
+  telefone    String?   @default("") @db.VarChar(50)
+  assunto     String?   @db.VarChar(255)
+  mensagem    String?   @db.Text
+  datacriacao DateTime? @db.DateTime(0)
+  status      String?   @db.VarChar(20)
+  logdata     DateTime? @db.DateTime(0)
+  logusuario  Int?
+  excluido    String    @default("") @db.Char(3)
+}
+
+model contatosinformacoes {
+  id          Int       @id @default(autoincrement())
+  localizacao String?   @db.VarChar(500)
+  telefone    String?   @db.VarChar(500)
+  email       String?   @db.VarChar(500)
+  status      String?   @db.VarChar(50)
+  excluido    String?   @db.VarChar(3)
+  logusuario  Int?
+  logdata     DateTime? @db.DateTime(0)
+}
+
+model cursoseditado {
+  id               Int     @id @default(autoincrement())
+  idinstituicao    Int?
+  idcategoria      Int?
+  titulo           String  @db.VarChar(100)
+  turno            String? @db.VarChar(100)
+  modalidade       String  @db.VarChar(60)
+  anobolsa         Int?
+  descricoes       String? @db.Text
+  valor            String? @db.VarChar(20)
+  valorpromocional String? @db.VarChar(20)
+  vagas            Int?
+  percentual       String? @db.VarChar(20)
+  destaque         String? @db.VarChar(30)
+  status           String? @db.VarChar(20)
+  excluido         String? @db.VarChar(20)
+  logusuario       Int?
+  logdata          String? @db.VarChar(100)
+}
+
+model documentos {
+  id      Int    @id @default(autoincrement())
+  idaluno Int
+  tipo    String @db.VarChar(100)
+  arquivo String @db.VarChar(220)
+}
+
+model duvidas {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  descricoes String?   @db.Text
+  status     String?   @db.VarChar(500)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model empresas {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  idimagem   Int?
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model enderecos {
+  id          Int     @id @default(autoincrement())
+  cep         String? @db.VarChar(50)
+  endereco    String? @db.VarChar(500)
+  numero      String? @db.VarChar(30)
+  complemento String? @db.VarChar(100)
+  bairro      String? @db.VarChar(100)
+  idestado    Int?
+  cidade      String? @db.VarChar(255)
+  excluido    String? @db.VarChar(3)
+
+  @@index([id], map: "idx_enderecos_id")
+  @@index([idestado], map: "idx_enderecos_idestado")
+}
+
+model estados {
+  id                Int      @id @default(autoincrement())
+  nome              String   @db.VarChar(255)
+  uf                String   @db.VarChar(2)
+  preposicao        String?  @db.VarChar(20)
+  capital           String?  @db.VarChar(255)
+  capitalpreposicao String?  @db.VarChar(255)
+  logusuario        Int
+  logdata           DateTime @db.DateTime(0)
+}
+
+model ferramentas {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  idimagem   Int?
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model fluidos {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  idimagem   Int?
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model fornecedores {
+  id                Int       @id @default(autoincrement())
+  idimagem          Int?
+  titulo            String?   @db.VarChar(500)
+  link              String?   @db.VarChar(500)
+  idcategoria       Int?
+  voucher           String?   @db.VarChar(500)
+  descritivovoucher String?   @db.Text
+  status            String?   @db.VarChar(50)
+  excluido          String?   @db.VarChar(3)
+  logusuario        Int?
+  logdata           DateTime? @db.DateTime(0)
+}
+
+model imagens {
+  id             Int       @id @default(autoincrement())
+  filename       String?   @db.VarChar(255)
+  size           Int?
+  ordem          Int?
+  logdata        DateTime? @db.DateTime(0)
+  logusuario     Int?
+  logusuariotipo String?   @db.VarChar(20)
+  excluido       String?   @db.VarChar(3)
+}
+
+model instituicoes {
+  id          Int       @id @default(autoincrement())
+  idimagem    Int?
+  url_imagem  String?
+  titulo      String?   @db.VarChar(500)
+  descricoes  String?   @db.Text
+  descricoes2 String?   @db.Text
+  descricoes3 String?   @db.Text
+  bairro      String?   @db.VarChar(500)
+  cidade      String?   @db.VarChar(500)
+  uf          String?   @db.VarChar(50)
+  status      String?   @db.VarChar(50)
+  email       String?   @db.VarChar(500)
+  senha       String?   @db.VarChar(500)
+  excluido    String?   @db.VarChar(3)
+  tipo        String?   @db.Char(1)
+  logusuario  Int?
+  logdata     DateTime? @db.DateTime(0)
+  map_url     String?
+}
+
+model instituicoes_imagens {
+  id             Int     @id @default(autoincrement())
+  id_instituicao Int?
+  image_url      String?
+}
+
+model midias {
+  id         Int       @id @default(autoincrement())
+  midia      String?   @db.VarChar(500)
+  link       String?   @db.VarChar(1000)
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model posts {
+  id         Int       @id @default(autoincrement())
+  idparent   Int?
+  idarquivo  Int?
+  data       DateTime? @db.DateTime(0)
+  topico     String?   @db.VarChar(255)
+  subtopico  String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  idimagem   Int?
+  idbanner   Int?
+  video      String?   @db.Text
+  link       String?   @db.VarChar(500)
+  ordem      Int?
+  destaque   String?   @db.VarChar(20)
+  status     String?   @db.VarChar(20)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int
+  logdata    DateTime  @db.DateTime(0)
+
+  @@index([excluido, id, idparent, status], map: "idx_1")
+}
+
+model postsimagens {
+  id       Int     @id @default(autoincrement())
+  idpost   Int?
+  legenda  String? @db.VarChar(255)
+  idimagem Int?
+  ordem    Int?
+  status   String? @db.VarChar(20)
+  excluido String? @db.VarChar(3)
+}
+
+model postsvideos {
+  id       Int     @id @default(autoincrement())
+  idpost   Int?
+  legenda  String? @db.VarChar(255)
+  texto    String? @db.Text
+  video    String? @db.Text
+  ordem    Int?
+  status   String? @db.VarChar(20)
+  excluido String? @db.VarChar(3)
+}
+
+model produtos {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  idimagem   Int?
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model promocoes {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  texto      String?   @db.Text
+  idimagem   Int?
+  status     String?   @db.VarChar(50)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model rodapecontatos {
+  id         Int       @id @default(autoincrement())
+  telefones  String?   @db.VarChar(500)
+  email      String?   @db.VarChar(500)
+  status     String?   @db.VarChar(500)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model rodapelocalizacoes {
+  id          Int       @id @default(autoincrement())
+  localizacao String?   @db.VarChar(500)
+  status      String?   @db.VarChar(500)
+  excluido    String?   @db.VarChar(3)
+  logusuario  Int?
+  logdata     DateTime? @db.DateTime(0)
+}
+
+model rodapetextos {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  descricoes String?   @db.Text
+  status     String?   @db.VarChar(500)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model sobrenos {
+  id         Int       @id @default(autoincrement())
+  titulo     String?   @db.VarChar(500)
+  descricoes String?   @db.Text
+  status     String?   @db.VarChar(500)
+  excluido   String?   @db.VarChar(3)
+  logusuario Int?
+  logdata    DateTime? @db.DateTime(0)
+}
+
+model usuarios {
+  id                Int       @id @default(autoincrement())
+  idfoto            Int?
+  idparent          Int?
+  idperfil          Int?
+  datacriacao       DateTime? @db.DateTime(0)
+  nomerazao         String?   @db.VarChar(255)
+  sobrenomefantasia String?   @db.VarChar(255)
+  email             String?   @db.VarChar(500)
+  senha             String?   @db.VarChar(50)
+  tipo              String?   @db.VarChar(20)
+  status            String?   @db.VarChar(20)
+  excluido          String?   @db.VarChar(3)
+  logusuario        Int?
+  logdata           DateTime? @db.DateTime(0)
+}
+
+model usuarioslimites {
+  id         Int      @id @default(autoincrement())
+  idmodulo   Int?
+  limite     String   @db.VarChar(255)
+  modulo     String?  @db.VarChar(50)
+  alias      String   @db.VarChar(255)
+  ordemalias Decimal? @db.Decimal(10, 4)
+  crud       String?  @db.VarChar(255)
+
+  @@index([id, limite], map: "idx_1")
+}
+
+model usuarioslimitesmodulos {
+  id     Int     @id @default(autoincrement())
+  modulo String? @db.VarChar(50)
+  ordem  Int?
+}
+
+model usuariosperfis {
+  id         Int      @id @default(autoincrement())
+  perfil     String   @db.VarChar(50)
+  status     String   @db.VarChar(20)
+  excluido   String   @db.VarChar(3)
+  logusuario Int
+  logdata    DateTime @db.DateTime(0)
+}
+
+model usuariosperfislimites {
+  id         Int    @id @default(autoincrement())
+  idperfil   Int
+  idlimite   Int
+  visualizar String @db.VarChar(3)
+  adicionar  String @db.VarChar(3)
+  editar     String @db.VarChar(3)
+  excluir    String @db.VarChar(3)
+
+  @@index([idlimite, idperfil], map: "idx_1")
+}
+
+model solicitacao_inscrica_escola {
+  id               String @id @default(uuid())
+  nome             String
+  idcategoria      Int
+  cidade           String
+  numero_de_alunos Int
 }
